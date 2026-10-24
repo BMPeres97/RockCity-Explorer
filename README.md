@@ -328,3 +328,5 @@ npm test
 ## 📄 License
 Academic Coursework Project — Kurunegala Day-Visit Tourism System (Version 2.1).
 Developed for University Programming Demonstration.
+#   R o c k C i t y - E x p l o r e r  
+ 
