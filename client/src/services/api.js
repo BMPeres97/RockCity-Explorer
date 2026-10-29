@@ -101,6 +101,16 @@ export const api = {
     return result;
   },
 
+  async deleteAdminPlace(id) {
+    const res = await fetch(`${API_BASE}/admin/places/${id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders()
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.message || 'Failed to delete place');
+    return result;
+  },
+
   async restoreAdminPlace(id) {
     const res = await fetch(`${API_BASE}/admin/places/${id}/restore`, {
       method: 'PATCH',

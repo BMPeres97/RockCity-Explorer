@@ -4,7 +4,7 @@ import {
   ShieldCheck,
   Plus,
   Edit,
-  Archive,
+  Trash2,
   RotateCcw,
   Search,
   ArrowLeft,
@@ -64,16 +64,16 @@ const AdminPlacesPage = () => {
     }
   }, [isAuthenticated, statusFilter, searchQuery]);
 
-  const handleArchive = async (place) => {
-    if (!window.confirm(`Archive "${place.name}"? It will be hidden from tourists but preserved in database.`)) {
+  const handleDelete = async (place) => {
+    if (!window.confirm(`Permanently delete "${place.name}"? This action cannot be undone.`)) {
       return;
     }
     try {
-      await api.archiveAdminPlace(place._id);
-      setNotification({ type: 'success', text: `Place "${place.name}" archived successfully.` });
+      await api.deleteAdminPlace(place._id);
+      setNotification({ type: 'success', text: `Place "${place.name}" deleted successfully.` });
       fetchPlaces();
     } catch (err) {
-      setNotification({ type: 'error', text: err.message || 'Failed to archive place' });
+      setNotification({ type: 'error', text: err.message || 'Failed to delete place' });
     }
   };
 
@@ -127,7 +127,7 @@ const AdminPlacesPage = () => {
               Place Management
             </h1>
             <p style={{ color: '#64748b', fontSize: '0.9rem', marginTop: '0.2rem' }}>
-              Manage active destinations and soft-deleted archives.
+              Manage destinations and restore previously archived records.
             </p>
           </div>
 
@@ -195,13 +195,6 @@ const AdminPlacesPage = () => {
               style={{ borderRadius: '8px' }}
             >
               Active Only
-            </button>
-            <button
-              onClick={() => setStatusFilter('archived')}
-              className={`btn btn-sm ${statusFilter === 'archived' ? 'btn-primary' : 'btn-secondary'}`}
-              style={{ borderRadius: '8px' }}
-            >
-              Archived (Soft Deleted)
             </button>
           </div>
 
@@ -360,7 +353,7 @@ const AdminPlacesPage = () => {
                             <span>Edit</span>
                           </Link>
 
-                          {/* Archive or Restore Soft Delete Action */}
+                          {/* Restore archived places or permanently delete any record */}
                           {place.isArchived ? (
                             <button
                               onClick={() => handleRestore(place)}
@@ -371,17 +364,16 @@ const AdminPlacesPage = () => {
                               <RotateCcw size={14} />
                               <span>Restore</span>
                             </button>
-                          ) : (
-                            <button
-                              onClick={() => handleArchive(place)}
-                              className="btn btn-sm btn-outline"
-                              style={{ color: '#d97706', borderColor: '#fde68a' }}
-                              title="Archive place (soft-delete)"
-                            >
-                              <Archive size={14} />
-                              <span>Archive</span>
-                            </button>
-                          )}
+                          ) : null}
+                          <button
+                            onClick={() => handleDelete(place)}
+                            className="btn btn-sm btn-outline"
+                            style={{ color: '#dc2626', borderColor: '#fecaca' }}
+                            title="Permanently delete place"
+                          >
+                            <Trash2 size={14} />
+                            <span>Delete</span>
+                          </button>
                         </div>
                       </td>
                     </tr>

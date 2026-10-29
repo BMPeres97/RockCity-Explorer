@@ -233,7 +233,7 @@ npm run seed
 * **Generic Error Messages:** Failed logins return `"Invalid username or password."` without disclosing whether the username or password was incorrect.
 * **Protected Routes:** All routes under `/api/admin/*` require a valid JWT in the `Authorization: Bearer <token>` header.
 * **Authoritative Duplicate Name Validation:** Case-insensitive check before saving rejects duplicates with `"A place with this name already exists."`
-* **Soft Delete:** Places are archived via `PATCH /api/admin/places/:id/archive` (`isArchived: true`), hiding them from tourists while retaining them for administrators, with one-click **Restore**.
+* **Place Management:** Administrators can permanently delete places with confirmation. Previously archived records can still be restored.
 * **Metadata Tracking:** Records display `createdAt`, `updatedAt`, and `updatedBy`.
 * **Embedded Leaflet Map Picker:** Admins can pick coordinates by clicking or dragging a marker on the map in real-time.
 
@@ -275,6 +275,7 @@ npm run seed
 | `GET` | `/api/admin/places` | Manage places with filter (`?status=all\|active\|archived`) |
 | `POST` | `/api/admin/places` | Create destination with authoritative duplicate check |
 | `PUT` | `/api/admin/places/:id` | Update destination details with duplicate check |
+| `DELETE` | `/api/admin/places/:id` | Permanently delete a destination |
 | `PATCH` | `/api/admin/places/:id/archive` | Soft-delete (archive) destination |
 | `PATCH` | `/api/admin/places/:id/restore` | Restore archived destination to public view |
 
@@ -303,7 +304,7 @@ npm test
    * Valid login and JWT token generation.
    * Generic error handling on invalid credentials (`"Invalid username or password."`).
    * Unauthorized request rejection (401).
-   * Destination creation, authoritative duplicate validation (`"A place with this name already exists."`), update, soft-delete, and restoration.
+   * Destination creation, authoritative duplicate validation (`"A place with this name already exists."`), update, soft-delete, restoration, and permanent deletion.
 4. **Visit Plan:**
    * Consecutive leg distance and duration calculation.
    * Maximum 5 stops enforcement (`"Your one-day plan can contain a maximum of 5 places."`).

@@ -229,9 +229,6 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-          <div style={{ fontSize: '0.85rem', color: '#94a3b8', maxWidth: '520px' }}>
-            All distances, travel times, and proximity calculations are computed deterministically from this fixed Kurunegala point. No tourist registration or browser GPS required.
-          </div>
         </div>
       </section>
 

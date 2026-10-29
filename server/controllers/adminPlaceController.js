@@ -314,6 +314,27 @@ const updateAdminPlace = async (req, res, next) => {
 };
 
 /**
+ * @desc   Permanently delete a place
+ * @route  DELETE /api/admin/places/:id
+ * @access Private (Admin only)
+ */
+const deleteAdminPlace = async (req, res, next) => {
+  try {
+    const place = await Place.findByIdAndDelete(req.params.id);
+    if (!place) {
+      return res.status(404).json({ success: false, message: 'Place not found.' });
+    }
+
+    res.json({
+      success: true,
+      message: `Place "${place.name}" deleted successfully.`
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * @desc   Soft-delete (Archive) a place
  * @route  PATCH /api/admin/places/:id/archive
  * @access Private (Admin only)
@@ -370,6 +391,7 @@ module.exports = {
   getAdminPlaces,
   createAdminPlace,
   updateAdminPlace,
+  deleteAdminPlace,
   archiveAdminPlace,
   restoreAdminPlace
 };

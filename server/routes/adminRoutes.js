@@ -5,6 +5,7 @@ const {
   getAdminPlaces,
   createAdminPlace,
   updateAdminPlace,
+  deleteAdminPlace,
   archiveAdminPlace,
   restoreAdminPlace
 } = require('../controllers/adminPlaceController');
@@ -17,6 +18,7 @@ router.get('/places/summary', getAdminSummary);
 router.get('/places', getAdminPlaces);
 router.post('/places', createAdminPlace);
 router.put('/places/:id', updateAdminPlace);
+router.delete('/places/:id', deleteAdminPlace);
 router.patch('/places/:id/archive', archiveAdminPlace);
 router.patch('/places/:id/restore', restoreAdminPlace);
 

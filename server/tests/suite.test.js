@@ -281,6 +281,24 @@ async function runTestSuite() {
     assert.strictEqual(foundInPublic, true, 'Restored place must reappear in tourist list');
   });
 
+  await testAsync('Admin can permanently delete a destination', async () => {
+    const res = await request(`/admin/places/${createdPlaceId}`, {
+      method: 'DELETE',
+      headers: { Authorization: ['Bearer', adminToken].join(' ') }
+    });
+    assert.strictEqual(res.status, 200);
+    assert.strictEqual(res.body.success, true);
+
+    const adminPlacesRes = await request('/admin/places', {
+      headers: { Authorization: ['Bearer', adminToken].join(' ') }
+    });
+    const foundInAdminList = adminPlacesRes.body.data.some(p => p._id === createdPlaceId);
+    assert.strictEqual(foundInAdminList, false, 'Deleted place must not appear in admin list');
+
+    const publicRes = await request(`/places/${createdPlaceId}`);
+    assert.strictEqual(publicRes.status, 404);
+  });
+
   // ----------------------------------------------------
   // TEST GROUP 4: VISIT PLAN BUILDER LOGIC
   // ----------------------------------------------------

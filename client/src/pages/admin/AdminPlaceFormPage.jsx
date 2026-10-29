@@ -33,8 +33,8 @@ const AdminPlaceFormPage = () => {
     category: 'Religious',
     description: '',
     address: '',
-    latitude: 7.4867,
-    longitude: 80.3685,
+    latitude: REFERENCE_LATITUDE,
+    longitude: REFERENCE_LONGITUDE,
     travelTips: '',
     imageUrl: '',
     openingHoursText: '06:00 - 18:00',
@@ -81,8 +81,8 @@ const AdminPlaceFormPage = () => {
               category: p.category || (catRes.data[0]?.name || 'Religious'),
               description: p.description || '',
               address: p.address || '',
-              latitude: Number(p.latitude) || 7.4867,
-              longitude: Number(p.longitude) || 80.3685,
+              latitude: Number(p.latitude ?? REFERENCE_LATITUDE),
+              longitude: Number(p.longitude ?? REFERENCE_LONGITUDE),
               travelTips: p.travelTips || (Array.isArray(p.localTravelTips) ? p.localTravelTips.join('\n') : ''),
               imageUrl: p.imageUrl || p.thumbnail || '',
               openingHoursText: hoursStr,
@@ -397,7 +397,7 @@ const AdminPlaceFormPage = () => {
                   Location Coordinates & Leaflet Map Picker
                 </h3>
                 <p style={{ color: '#64748b', fontSize: '0.825rem', marginTop: '0.2rem' }}>
-                  Click anywhere on the map or drag the marker to position. Manual coordinate input auto-synchronizes with the map.
+                  New places default to My Home Location ({REFERENCE_LATITUDE}, {REFERENCE_LONGITUDE}). Click the map, drag the marker, or enter coordinates to set the place location.
                 </p>
               </div>
               <span style={{ fontSize: '0.75rem', backgroundColor: '#ccfbf1', color: '#0d9488', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: '700' }}>

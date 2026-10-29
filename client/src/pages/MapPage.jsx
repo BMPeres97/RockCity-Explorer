@@ -2,11 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Compass, Filter, Clock, Search, Navigation, List, MapPin } from 'lucide-react';
 import { api } from '../services/api';
 import MapComponent from '../components/MapComponent';
-import {
-  REFERENCE_LATITUDE,
-  REFERENCE_LONGITUDE,
-  REFERENCE_LOCATION_NAME
-} from '../config/constants';
 import { formatDistance } from '../utils/geoDistance';
 
 const MapPage = () => {
@@ -93,8 +88,7 @@ const MapPage = () => {
                 Kurunegala Interactive Map
               </h2>
               <div style={{ fontSize: '0.75rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                <span>Centered at fixed reference:</span>
-                <strong style={{ color: '#b45309' }}>{REFERENCE_LOCATION_NAME} ({REFERENCE_LATITUDE}, {REFERENCE_LONGITUDE})</strong>
+                <strong style={{ color: '#b45309' }}>My Home Location</strong>
               </div>
             </div>
           </div>

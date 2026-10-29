@@ -19,8 +19,7 @@ import { useAuth } from '../../context/AuthContext';
 import { api } from '../../services/api';
 import {
   REFERENCE_LATITUDE,
-  REFERENCE_LONGITUDE,
-  REFERENCE_LOCATION_NAME
+  REFERENCE_LONGITUDE
 } from '../../config/constants';
 
 const AdminDashboardPage = () => {
@@ -213,7 +212,7 @@ const AdminDashboardPage = () => {
                 {REFERENCE_LATITUDE}, {REFERENCE_LONGITUDE}
               </div>
               <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.35rem' }}>
-                {REFERENCE_LOCATION_NAME}
+                My Home Location
               </div>
             </div>
           </div>
