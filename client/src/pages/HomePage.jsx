@@ -8,7 +8,6 @@ import {
   Sparkles,
   ArrowRight,
   ShieldCheck,
-  Navigation,
   Clock,
   CheckCircle2,
   Mountain,
@@ -20,9 +19,6 @@ import { api } from '../services/api';
 import PlaceCard from '../components/PlaceCard';
 import PlaceSkeletonCard from '../components/PlaceSkeletonCard';
 import {
-  REFERENCE_LATITUDE,
-  REFERENCE_LONGITUDE,
-  REFERENCE_LOCATION_NAME,
   DEFAULT_AVERAGE_SPEED_KMH
 } from '../config/constants';
 
@@ -201,33 +197,6 @@ const HomePage = () => {
               <MapPin size={20} />
               <span>Interactive Map</span>
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Fixed Reference Point Spotlight Banner */}
-      <section style={{ backgroundColor: '#0f172a', color: '#ffffff', padding: '1.25rem 0', borderBottom: '1px solid #1e293b' }}>
-        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <div style={{
-              backgroundColor: '#d97706',
-              color: '#ffffff',
-              padding: '0.4rem',
-              borderRadius: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <Navigation size={18} />
-            </div>
-            <div>
-              <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: '#f59e0b', fontWeight: '700', letterSpacing: '0.05em' }}>
-                Fixed Deterministic Reference Location
-              </div>
-              <div style={{ fontSize: '0.95rem', fontWeight: '700', color: '#ffffff' }}>
-                {REFERENCE_LOCATION_NAME} ({REFERENCE_LATITUDE}, {REFERENCE_LONGITUDE})
-              </div>
-            </div>
           </div>
         </div>
       </section>

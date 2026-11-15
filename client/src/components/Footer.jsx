@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mountain, MapPin, Navigation, Info, Heart, Shield } from 'lucide-react';
+import { Mountain, MapPin, Heart, Shield } from 'lucide-react';
 import {
-  REFERENCE_LATITUDE,
-  REFERENCE_LONGITUDE,
   REFERENCE_LOCATION_NAME,
   DEFAULT_AVERAGE_SPEED_KMH
 } from '../config/constants';
@@ -11,16 +9,9 @@ import {
 const Footer = () => {
   return (
     <footer style={{ backgroundColor: '#0f172a', color: '#cbd5e1', marginTop: 'auto', borderTop: '1px solid #1e293b' }}>
-      {/* Reference Coordinate Highlight Strip */}
+      {/* Reference Information Strip */}
       <div style={{ backgroundColor: '#1e293b', borderBottom: '1px solid #334155', padding: '0.85rem 0' }}>
-        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem', fontSize: '0.825rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#38bdf8' }}>
-            <Navigation size={16} />
-            <span style={{ fontWeight: '600' }}>Fixed Application Reference Point:</span>
-            <code style={{ backgroundColor: '#0f172a', padding: '0.2rem 0.5rem', borderRadius: '4px', color: '#f59e0b', fontFamily: 'monospace' }}>
-              Lat {REFERENCE_LATITUDE}, Lon {REFERENCE_LONGITUDE}
-            </code>
-          </div>
+        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: '0.75rem', fontSize: '0.825rem' }}>
           <div style={{ color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <MapPin size={15} color="#0d9488" />
             <span>{REFERENCE_LOCATION_NAME}</span>
