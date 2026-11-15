@@ -22,9 +22,8 @@ const Footer = () => {
       </div>
 
       <div className="container" style={{ padding: '3.5rem 1.25rem 2.5rem' }}>
-        <div style={{
+        <div className="footer-grid" style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
           gap: '2.5rem',
           marginBottom: '3rem'
         }}>

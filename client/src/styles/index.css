@@ -631,6 +631,10 @@ h1, h2, h3, h4, h5, h6 {
   animation: slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.footer-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 @keyframes slide-up {
   from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
@@ -640,6 +644,10 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 768px) {
   .section-title {
     font-size: 1.65rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -697,6 +705,10 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Mobile Screen optimization down to 320px (SRS Section 29) */
 @media (max-width: 480px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
   .container {
     padding-left: 0.85rem;
     padding-right: 0.85rem;
