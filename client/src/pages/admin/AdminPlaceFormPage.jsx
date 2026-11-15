@@ -21,6 +21,10 @@ import {
   REFERENCE_LONGITUDE
 } from '../../config/constants';
 
+const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024;
+const MAX_IMAGE_COUNT = 3;
+const ACCEPTED_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif']);
+
 const AdminPlaceFormPage = () => {
   const { id } = useParams();
   const isEditMode = Boolean(id);
@@ -46,9 +50,23 @@ const AdminPlaceFormPage = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [existingImages, setExistingImages] = useState([]);
+  const [selectedImageFiles, setSelectedImageFiles] = useState([]);
+  const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
   const [serverError, setServerError] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [fetching, setFetching] = useState(isEditMode);
+
+  useEffect(() => {
+    if (selectedImageFiles.length === 0) {
+      setImagePreviewUrls([]);
+      return undefined;
+    }
+
+    const previewUrls = selectedImageFiles.map((file) => URL.createObjectURL(file));
+    setImagePreviewUrls(previewUrls);
+    return () => previewUrls.forEach((previewUrl) => URL.revokeObjectURL(previewUrl));
+  }, [selectedImageFiles]);
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -92,6 +110,11 @@ const AdminPlaceFormPage = () => {
               rating: p.rating || 4.5,
               popularity: p.popularity || 85
             });
+            setExistingImages(
+              Array.isArray(p.images) && p.images.length
+                ? p.images
+                : [p.imageUrl || p.thumbnail].filter(Boolean)
+            );
           }
         }
       } catch (err) {
@@ -122,6 +145,38 @@ const AdminPlaceFormPage = () => {
     }));
   };
 
+  const handleImageChange = (event) => {
+    const files = Array.from(event.target.files || []);
+    event.target.value = '';
+    if (!files.length) return;
+
+    if (files.some((file) => !ACCEPTED_IMAGE_TYPES.has(file.type))) {
+      setErrors((prev) => ({ ...prev, imageUrl: 'Choose JPEG, PNG, WEBP, or GIF images.' }));
+      return;
+    }
+
+    if (files.some((file) => file.size > MAX_IMAGE_SIZE_BYTES)) {
+      setErrors((prev) => ({ ...prev, imageUrl: 'Each image must be 5 MB or smaller.' }));
+      return;
+    }
+
+    if (existingImages.length + selectedImageFiles.length + files.length > MAX_IMAGE_COUNT) {
+      setErrors((prev) => ({ ...prev, imageUrl: `You can add up to ${MAX_IMAGE_COUNT} images per destination.` }));
+      return;
+    }
+
+    setSelectedImageFiles((previous) => [...previous, ...files]);
+    setErrors((prev) => ({ ...prev, imageUrl: null }));
+  };
+
+  const removeExistingImage = (imageIndex) => {
+    setExistingImages((previous) => previous.filter((_, index) => index !== imageIndex));
+  };
+
+  const removeSelectedImage = (fileIndex) => {
+    setSelectedImageFiles((previous) => previous.filter((_, index) => index !== fileIndex));
+  };
+
   // Validate form inputs
   const validateForm = () => {
     const newErrors = {};
@@ -141,10 +196,8 @@ const AdminPlaceFormPage = () => {
     if (!formData.travelTips.trim()) {
       newErrors.travelTips = 'Travel tips are required.';
     }
-    if (!formData.imageUrl.trim()) {
-      newErrors.imageUrl = 'Image URL is required.';
-    } else if (!/^https?:\/\/.+/i.test(formData.imageUrl.trim())) {
-      newErrors.imageUrl = 'Please enter a valid HTTP/HTTPS image URL.';
+    if (existingImages.length + selectedImageFiles.length === 0) {
+      newErrors.imageUrl = 'Please upload an image.';
     }
 
     // Latitude validation (-90 to 90)
@@ -185,8 +238,9 @@ const AdminPlaceFormPage = () => {
         longitude: Number(formData.longitude),
         travelTips: formData.travelTips.trim(),
         localTravelTips: formData.travelTips.split('\n').map((t) => t.trim()).filter(Boolean),
-        imageUrl: formData.imageUrl.trim(),
-        thumbnail: formData.imageUrl.trim(),
+        imageUrl: existingImages[0] || (selectedImageFiles.length ? '' : formData.imageUrl.trim()),
+        thumbnail: existingImages[0] || (selectedImageFiles.length ? '' : formData.imageUrl.trim()),
+        images: existingImages,
         openingHours: {
           open: '06:00',
           close: '18:00',
@@ -201,9 +255,9 @@ const AdminPlaceFormPage = () => {
       };
 
       if (isEditMode) {
-        await api.updateAdminPlace(id, payload);
+        await api.updateAdminPlace(id, payload, selectedImageFiles);
       } else {
-        await api.createAdminPlace(payload);
+        await api.createAdminPlace(payload, selectedImageFiles);
       }
 
       navigate('/admin/places');
@@ -368,22 +422,100 @@ const AdminPlaceFormPage = () => {
                 {errors.description && <div style={{ color: '#ef4444', fontSize: '0.775rem', marginTop: '0.25rem' }}>{errors.description}</div>}
               </div>
 
-              {/* Image URL */}
+              {/* Destination Images */}
               <div>
                 <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '700', color: '#334155', marginBottom: '0.35rem' }}>
-                  Image URL *
+                  Destination Images *
                 </label>
-                <div style={{ position: 'relative' }}>
-                  <ImageIcon size={18} style={{ position: 'absolute', left: '0.85rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
-                  <input
-                    type="url"
-                    value={formData.imageUrl}
-                    onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                    placeholder="https://images.unsplash.com/photo-..."
-                    className="input-control"
-                    style={{ paddingLeft: '2.5rem', borderColor: errors.imageUrl ? '#ef4444' : undefined }}
-                  />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                  <label
+                    className="btn btn-secondary"
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}
+                  >
+                    <ImageIcon size={18} />
+                    <span>Choose images</span>
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp,image/gif"
+                      multiple
+                      onChange={handleImageChange}
+                      style={{
+                        position: 'absolute',
+                        width: '1px',
+                        height: '1px',
+                        padding: 0,
+                        margin: '-1px',
+                        overflow: 'hidden',
+                        clip: 'rect(0, 0, 0, 0)',
+                        whiteSpace: 'nowrap',
+                        border: 0
+                      }}
+                    />
+                  </label>
+                  <span style={{ color: '#64748b', fontSize: '0.8rem' }}>
+                    {existingImages.length + selectedImageFiles.length}/{MAX_IMAGE_COUNT} images; JPEG, PNG, WEBP, or GIF, up to 5 MB each.
+                  </span>
                 </div>
+                {(existingImages.length > 0 || selectedImageFiles.length > 0) && (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginTop: '0.75rem' }}>
+                    {existingImages.map((image, index) => (
+                      <div key={`existing-${image}-${index}`} style={{ position: 'relative' }}>
+                        <img
+                          src={image}
+                          alt={`Destination image ${index + 1}`}
+                          style={{ width: '140px', height: '100px', objectFit: 'cover', borderRadius: '8px' }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeExistingImage(index)}
+                          aria-label={`Remove destination image ${index + 1}`}
+                          style={{
+                            position: 'absolute',
+                            top: '4px',
+                            right: '4px',
+                            border: 0,
+                            borderRadius: '50%',
+                            width: '24px',
+                            height: '24px',
+                            backgroundColor: '#0f172a',
+                            color: '#ffffff',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                    {imagePreviewUrls.map((previewUrl, index) => (
+                      <div key={`selected-${previewUrl}`} style={{ position: 'relative' }}>
+                        <img
+                          src={previewUrl}
+                          alt={`New destination image ${index + 1}`}
+                          style={{ width: '140px', height: '100px', objectFit: 'cover', borderRadius: '8px' }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeSelectedImage(index)}
+                          aria-label={`Remove new destination image ${index + 1}`}
+                          style={{
+                            position: 'absolute',
+                            top: '4px',
+                            right: '4px',
+                            border: 0,
+                            borderRadius: '50%',
+                            width: '24px',
+                            height: '24px',
+                            backgroundColor: '#0f172a',
+                            color: '#ffffff',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 {errors.imageUrl && <div style={{ color: '#ef4444', fontSize: '0.775rem', marginTop: '0.25rem' }}>{errors.imageUrl}</div>}
               </div>
             </div>

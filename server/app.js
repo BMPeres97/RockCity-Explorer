@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const path = require('path');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
 const { noSqlInjectionProtection } = require('./middleware/security');
 const {
@@ -35,6 +36,7 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), { fallthrough: false }));
 
 // NoSQL Injection Protection & Input Sanitization
 app.use(noSqlInjectionProtection);

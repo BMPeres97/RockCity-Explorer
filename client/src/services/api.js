@@ -4,12 +4,23 @@
 
 const API_BASE = '/api';
 
-const getAuthHeaders = () => {
+const getAuthorizationHeaders = () => {
   const token = localStorage.getItem('rockcity_admin_token');
   return {
-    'Content-Type': 'application/json',
     ...(token ? { Authorization: `Bearer ${token}` } : {})
   };
+};
+
+const getAuthHeaders = () => ({
+  'Content-Type': 'application/json',
+  ...getAuthorizationHeaders()
+});
+
+const createPlaceFormData = (data, imageFiles = []) => {
+  const formData = new FormData();
+  formData.append('data', JSON.stringify(data));
+  imageFiles.forEach((imageFile) => formData.append('images', imageFile));
+  return formData;
 };
 
 export const api = {
@@ -69,22 +80,22 @@ export const api = {
     return await res.json();
   },
 
-  async createAdminPlace(data) {
+  async createAdminPlace(data, imageFiles) {
     const res = await fetch(`${API_BASE}/admin/places`, {
       method: 'POST',
-      headers: getAuthHeaders(),
-      body: JSON.stringify(data)
+      headers: getAuthorizationHeaders(),
+      body: createPlaceFormData(data, imageFiles)
     });
     const result = await res.json();
     if (!res.ok) throw new Error(result.message || 'Failed to create place');
     return result;
   },
 
-  async updateAdminPlace(id, data) {
+  async updateAdminPlace(id, data, imageFiles) {
     const res = await fetch(`${API_BASE}/admin/places/${id}`, {
       method: 'PUT',
-      headers: getAuthHeaders(),
-      body: JSON.stringify(data)
+      headers: getAuthorizationHeaders(),
+      body: createPlaceFormData(data, imageFiles)
     });
     const result = await res.json();
     if (!res.ok) throw new Error(result.message || 'Failed to update place');

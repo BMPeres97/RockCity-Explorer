@@ -10,14 +10,15 @@ const {
   restoreAdminPlace
 } = require('../controllers/adminPlaceController');
 const { protect } = require('../middleware/authMiddleware');
+const { uploadPlaceImage } = require('../middleware/placeImageUpload');
 
 // All admin routes are strictly protected by auth middleware
 router.use(protect);
 
 router.get('/places/summary', getAdminSummary);
 router.get('/places', getAdminPlaces);
-router.post('/places', createAdminPlace);
-router.put('/places/:id', updateAdminPlace);
+router.post('/places', uploadPlaceImage, createAdminPlace);
+router.put('/places/:id', uploadPlaceImage, updateAdminPlace);
 router.delete('/places/:id', deleteAdminPlace);
 router.patch('/places/:id/archive', archiveAdminPlace);
 router.patch('/places/:id/restore', restoreAdminPlace);
