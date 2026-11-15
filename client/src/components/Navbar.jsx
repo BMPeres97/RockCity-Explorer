@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Compass,
@@ -7,20 +7,35 @@ import {
   ShieldCheck,
   Menu,
   X,
-  Sparkles,
   LogOut,
-  Mountain
+  Mountain,
+  Moon,
+  Sun
 } from 'lucide-react';
 import { usePlan } from '../context/PlanContext';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('rockcity_theme') === 'dark');
   const location = useLocation();
   const { planPlaces } = usePlan();
   const { isAuthenticated, admin, logout } = useAuth();
 
   const isActive = (path) => location.pathname === path;
+
+  const toggleDarkMode = () => {
+    setDarkMode((enabled) => {
+      const nextMode = !enabled;
+      localStorage.setItem('rockcity_theme', nextMode ? 'dark' : 'light');
+      document.documentElement.dataset.theme = nextMode ? 'dark' : 'light';
+      return nextMode;
+    });
+  };
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = darkMode ? 'dark' : 'light';
+  }, [darkMode]);
 
   return (
     <header className="glass-nav" style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
@@ -125,20 +140,15 @@ const Navbar = () => {
 
         {/* Action Controls & Admin */}
         <div style={{ display: 'none', alignItems: 'center', gap: '1rem' }} className="desktop-actions">
-          <Link
-            to="/plan"
-            className="btn btn-primary btn-sm"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.55rem 1.1rem',
-              borderRadius: '9999px'
-            }}
+          <button
+            type="button"
+            className="btn btn-secondary btn-sm theme-toggle"
+            onClick={toggleDarkMode}
+            aria-pressed={darkMode}
           >
-            <Sparkles size={16} />
-            <span>My Plan ({planPlaces.length})</span>
-          </Link>
+            {darkMode ? <Sun size={16} /> : <Moon size={16} />}
+            <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
+          </button>
 
           {isAuthenticated ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -280,6 +290,19 @@ const Navbar = () => {
               {planPlaces.length} places
             </span>
           </Link>
+
+          <hr style={{ border: 'none', borderTop: '1px solid #f1f5f9' }} />
+
+          <button
+            type="button"
+            className="btn btn-secondary theme-toggle"
+            onClick={toggleDarkMode}
+            aria-pressed={darkMode}
+            style={{ justifyContent: 'flex-start' }}
+          >
+            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+            <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
+          </button>
 
           <hr style={{ border: 'none', borderTop: '1px solid #f1f5f9' }} />
 

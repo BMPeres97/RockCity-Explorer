@@ -179,6 +179,175 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
+.theme-toggle {
+  color: var(--text-main);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --primary-light: #134e4a;
+  --success-bg: #064e3b;
+  --warning-bg: #78350f;
+  --danger-bg: #7f1d1d;
+  --info-bg: #0c4a6e;
+
+  --bg-main: #0b1220;
+  --bg-card: #111c2e;
+  --bg-card-subtle: #1e293b;
+  --border-light: #334155;
+  --border-medium: #475569;
+
+  --text-main: #e2e8f0;
+  --text-muted: #a8b4c5;
+  --text-light: #94a3b8;
+
+  --cat-religious-bg: #134e4a;
+  --cat-nature-bg: #14532d;
+  --cat-heritage-bg: #78350f;
+  --cat-cultural-bg: #4c1d95;
+}
+
+[data-theme="dark"] body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .glass-nav {
+  background: rgba(15, 23, 42, 0.94);
+  border-bottom-color: #334155;
+}
+
+[data-theme="dark"] .glass-banner {
+  background: rgba(17, 28, 46, 0.94);
+  border-color: #334155;
+}
+
+[data-theme="dark"] .card,
+[data-theme="dark"] .empty-state,
+[data-theme="dark"] .input-control {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border-color: var(--border-light);
+}
+
+[data-theme="dark"] .mobile-menu {
+  background-color: var(--bg-card) !important;
+}
+
+[data-theme="dark"] .glass-nav [style*="color: rgb(15, 23, 42)"],
+[data-theme="dark"] .glass-nav [style*="color: rgb(51, 65, 85)"] {
+  color: var(--text-main) !important;
+}
+
+[data-theme="dark"] .glass-nav [style*="color: rgb(100, 116, 139)"],
+[data-theme="dark"] .glass-nav [style*="color: rgb(148, 163, 184)"] {
+  color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] .mobile-menu hr {
+  border-top-color: var(--border-light) !important;
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background-color: #334155;
+}
+
+[data-theme="dark"] .btn-outline:hover {
+  background-color: var(--primary-light);
+}
+
+[data-theme="dark"] .error-banner {
+  background-color: #3b1118;
+  border-color: #7f1d1d;
+  color: #fecaca;
+}
+
+[data-theme="dark"] .error-banner-text {
+  color: #fecaca;
+}
+
+[data-theme="dark"] .skeleton {
+  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background-size: 200% 100%;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+[data-theme="dark"] main [style*="background-color: rgb(248, 250, 252)"],
+[data-theme="dark"] main [style*="background-color: rgb(255, 255, 255)"] {
+  background-color: var(--bg-card) !important;
+}
+
+[data-theme="dark"] main [style*="background-color: rgb(248, 250, 252)"] {
+  background-color: var(--bg-main) !important;
+}
+
+[data-theme="dark"] main .card[style*="background-color: rgb(255, 255, 255)"],
+[data-theme="dark"] main [style*="background-color: rgb(255, 255, 255)"] .card {
+  background-color: var(--bg-card) !important;
+}
+
+[data-theme="dark"] main [style*="background-color: rgb(241, 245, 249)"],
+[data-theme="dark"] main [style*="background-color: rgb(226, 232, 240)"] {
+  background-color: var(--bg-card-subtle) !important;
+}
+
+[data-theme="dark"] main [style*="background-color: rgb(204, 251, 241)"] {
+  background-color: #134e4a !important;
+}
+
+[data-theme="dark"] main [style*="background-color: rgb(220, 252, 231)"],
+[data-theme="dark"] main [style*="background-color: rgb(236, 253, 245)"] {
+  background-color: #14532d !important;
+}
+
+[data-theme="dark"] main [style*="background-color: rgb(254, 243, 199)"],
+[data-theme="dark"] main [style*="background-color: rgb(255, 251, 235)"] {
+  background-color: #78350f !important;
+}
+
+[data-theme="dark"] main [style*="background-color: rgb(237, 233, 254)"] {
+  background-color: #4c1d95 !important;
+}
+
+[data-theme="dark"] main [style*="background-color: rgb(254, 242, 242)"] {
+  background-color: #3b1118 !important;
+}
+
+[data-theme="dark"] main [style*="background-color: rgb(240, 249, 255)"],
+[data-theme="dark"] main [style*="background-color: rgb(224, 242, 254)"] {
+  background-color: #0c4a6e !important;
+}
+
+[data-theme="dark"] main [style*="color: rgb(15, 23, 42)"],
+[data-theme="dark"] main [style*="color: rgb(30, 41, 59)"],
+[data-theme="dark"] main [style*="color: rgb(51, 65, 85)"] {
+  color: var(--text-main) !important;
+}
+
+[data-theme="dark"] main [style*="color: rgb(71, 85, 105)"],
+[data-theme="dark"] main [style*="color: rgb(100, 116, 139)"],
+[data-theme="dark"] main [style*="color: rgb(148, 163, 184)"] {
+  color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] main [style*="color: rgb(146, 64, 14)"],
+[data-theme="dark"] main [style*="color: rgb(180, 83, 9)"] {
+  color: #fcd34d !important;
+}
+
+[data-theme="dark"] main [style*="border: 1px solid rgb(226, 232, 240)"],
+[data-theme="dark"] main [style*="border-bottom: 1px solid rgb(226, 232, 240)"],
+[data-theme="dark"] main [style*="border-top: 1px solid rgb(226, 232, 240)"] {
+  border-color: var(--border-light) !important;
+}
+
 /* Buttons */
 .btn {
   display: inline-flex;
