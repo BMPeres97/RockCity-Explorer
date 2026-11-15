@@ -174,21 +174,6 @@ const AdminLoginPage = () => {
           </button>
         </form>
 
-        {/* Seed Credentials Reminder for Demonstration */}
-        <div style={{
-          marginTop: '1.75rem',
-          padding: '0.85rem',
-          backgroundColor: '#f1f5f9',
-          borderRadius: '10px',
-          fontSize: '0.8rem',
-          color: '#475569',
-          border: '1px solid #e2e8f0'
-        }}>
-          <div style={{ fontWeight: '700', color: '#0f172a', marginBottom: '0.2rem' }}>Seeded Demonstration Administrator:</div>
-          <div>Username: <code>admin</code> (or <code>admin@rockcity.lk</code>)</div>
-          <div>Password: <code>AdminRockCity@2026</code></div>
-        </div>
-
         <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
           <Link to="/" style={{ color: '#64748b', fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
             <ArrowLeft size={14} />
