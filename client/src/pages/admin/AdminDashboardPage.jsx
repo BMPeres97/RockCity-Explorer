@@ -5,7 +5,6 @@ import {
   Plus,
   MapPin,
   Compass,
-  Archive,
   CheckCircle,
   Clock,
   ArrowRight,
@@ -67,7 +66,6 @@ const AdminDashboardPage = () => {
   }
 
   const activeCount = summary?.totalActive ?? 0;
-  const archivedCount = summary?.totalArchived ?? 0;
   const totalPlaces = summary?.totalPlaces ?? 0;
   const categories = summary?.categoryStats || [];
   const recentPlaces = summary?.recentlyUpdated || [];
@@ -159,24 +157,6 @@ const AdminDashboardPage = () => {
               </div>
               <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.35rem' }}>
                 Visible to tourists in Kurunegala
-              </div>
-            </div>
-
-            {/* Archived Places Card (Soft Delete) */}
-            <div className="card" style={{ padding: '1.5rem', backgroundColor: '#ffffff', borderLeft: '4px solid #f59e0b' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                <span style={{ fontSize: '0.775rem', fontWeight: '700', textTransform: 'uppercase', color: '#64748b' }}>
-                  Archived Places
-                </span>
-                <div style={{ backgroundColor: '#fffbeb', color: '#f59e0b', padding: '0.35rem', borderRadius: '8px' }}>
-                  <Archive size={18} />
-                </div>
-              </div>
-              <div style={{ fontSize: '2.2rem', fontWeight: '800', color: '#0f172a', lineHeight: 1.1 }}>
-                {archivedCount}
-              </div>
-              <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.35rem' }}>
-                Soft-deleted (hidden from tourist views)
               </div>
             </div>
 
