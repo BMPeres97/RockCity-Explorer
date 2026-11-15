@@ -12,7 +12,7 @@
 
 export const REFERENCE_LATITUDE = 7.4692807;
 export const REFERENCE_LONGITUDE = 80.4424776;
-export const REFERENCE_LOCATION_NAME = 'Kurunegala Central Reference Point';
+export const REFERENCE_LOCATION_NAME = 'My Home Location';
 
 // Default average travel speed in km/h on Kurunegala roads
 export const DEFAULT_AVERAGE_SPEED_KMH = 30;

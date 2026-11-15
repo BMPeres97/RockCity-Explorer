@@ -95,29 +95,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Travel Reference Notes */}
-          <div>
-            <h4 style={{ color: '#ffffff', fontSize: '1rem', fontWeight: '700', marginBottom: '1.25rem', letterSpacing: '0.02em' }}>
-              Travel Reference
-            </h4>
-            <div style={{
-              backgroundColor: '#1e293b',
-              padding: '1rem',
-              borderRadius: '8px',
-              fontSize: '0.85rem',
-              border: '1px solid #334155',
-              lineHeight: 1.6
-            }}>
-              <p style={{ color: '#e2e8f0', marginBottom: '0.5rem', fontWeight: '600' }}>
-                Fixed Deterministic Distances
-              </p>
-              <p style={{ color: '#94a3b8' }}>
-                All distance measurements and proximity sort orders are measured deterministically from Kurunegala's fixed reference coordinate
-                using the spherical Haversine formula.
-              </p>
-            </div>
-          </div>
-
           {/* Emergency & Admin Access */}
           <div>
             <h4 style={{ color: '#ffffff', fontSize: '1rem', fontWeight: '700', marginBottom: '1.25rem', letterSpacing: '0.02em' }}>

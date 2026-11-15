@@ -12,7 +12,7 @@
 
 const REFERENCE_LATITUDE = parseFloat(process.env.REFERENCE_LATITUDE) || 7.4692807;
 const REFERENCE_LONGITUDE = parseFloat(process.env.REFERENCE_LONGITUDE) || 80.4424776;
-const REFERENCE_LOCATION_NAME = process.env.REFERENCE_LOCATION_NAME || 'Kurunegala Central Reference Point';
+const REFERENCE_LOCATION_NAME = process.env.REFERENCE_LOCATION_NAME || 'My Home Location';
 
 // Default average tourist travel speed on Kurunegala local & suburban roads in km/h
 const DEFAULT_AVERAGE_SPEED_KMH = parseFloat(process.env.DEFAULT_AVERAGE_SPEED_KMH) || 30;

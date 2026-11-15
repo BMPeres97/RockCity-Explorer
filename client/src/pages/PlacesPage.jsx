@@ -5,12 +5,6 @@ import { api } from '../services/api';
 import PlaceCard from '../components/PlaceCard';
 import PlaceSkeletonCard from '../components/PlaceSkeletonCard';
 import FilterBar from '../components/FilterBar';
-import {
-  REFERENCE_LATITUDE,
-  REFERENCE_LONGITUDE,
-  REFERENCE_LOCATION_NAME
-} from '../config/constants';
-
 const PlacesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -133,7 +127,7 @@ const PlacesPage = () => {
             Explore Kurunegala Destinations
           </h1>
           <p style={{ color: '#64748b', fontSize: '1rem', maxWidth: '700px' }}>
-            Browse curated local places sorted by straight-line proximity to the fixed Kurunegala reference location ({REFERENCE_LATITUDE}, {REFERENCE_LONGITUDE}).
+            Discover temples, scenic landmarks, and local attractions. Search and filter to find the perfect places for your Kurunegala visit.
           </p>
         </div>
 

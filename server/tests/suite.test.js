@@ -90,7 +90,7 @@ async function runTestSuite() {
   test('Fixed reference coordinate is strictly 7.4692807, 80.4424776', () => {
     assert.strictEqual(REFERENCE_LATITUDE, 7.4692807, 'Latitude must be 7.4692807');
     assert.strictEqual(REFERENCE_LONGITUDE, 80.4424776, 'Longitude must be 80.4424776');
-    assert.strictEqual(REFERENCE_LOCATION_NAME, 'Kurunegala Central Reference Point');
+    assert.strictEqual(REFERENCE_LOCATION_NAME, 'My Home Location');
   });
 
   test('Haversine distance returns 0 km for identical coordinates', () => {
