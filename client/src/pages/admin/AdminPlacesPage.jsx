@@ -18,7 +18,6 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../services/api';
-import { formatDistance } from '../../utils/geoDistance';
 import {
   REFERENCE_LATITUDE,
   REFERENCE_LONGITUDE
@@ -274,9 +273,6 @@ const AdminPlacesPage = () => {
                           <div>
                             <div style={{ fontWeight: '700', color: '#0f172a', fontSize: '0.95rem' }}>
                               {place.name}
-                            </div>
-                            <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
-                              {formatDistance(place.distanceFromReference)} from reference center
                             </div>
                           </div>
                         </div>
