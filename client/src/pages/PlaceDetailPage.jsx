@@ -391,7 +391,9 @@ const PlaceDetailPage = () => {
                   <span>Admission Fee</span>
                 </div>
                 <div style={{ fontWeight: '700', fontSize: '0.95rem', color: '#0f172a' }}>
-                  {place.entryFee?.isFree ? (
+                  {typeof place.entryFee === 'string' ? (
+                    place.entryFee
+                  ) : place.entryFee?.isFree ? (
                     <span style={{ color: '#16a34a' }}>Free Admission</span>
                   ) : (
                     <span>
@@ -399,9 +401,11 @@ const PlaceDetailPage = () => {
                     </span>
                   )}
                 </div>
-                <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.2rem' }}>
-                  {place.entryFee?.note || 'Standard entry'}
-                </div>
+                {typeof place.entryFee !== 'string' && (
+                  <div style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.2rem' }}>
+                    {place.entryFee?.note || 'Standard entry'}
+                  </div>
+                )}
               </div>
 
               {/* Peak Hours */}
