@@ -375,7 +375,9 @@ const PlaceDetailPage = () => {
                 <div style={{ fontWeight: '700', fontSize: '0.95rem', color: '#0f172a' }}>
                   {place.openingHours?.alwaysOpen
                     ? 'Open 24 Hours'
-                    : `${place.openingHours?.open || '06:00'} - ${place.openingHours?.close || '18:00'}`}
+                    : typeof place.openingHours === 'string'
+                      ? place.openingHours
+                      : `${place.openingHours?.open || '06:00'} - ${place.openingHours?.close || '18:00'}`}
                 </div>
                 <div style={{ fontSize: '0.8rem', color: openStatus.isOpen ? '#10b981' : '#ef4444', fontWeight: '600', marginTop: '0.2rem' }}>
                   {openStatus.detail}

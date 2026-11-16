@@ -241,12 +241,7 @@ const AdminPlaceFormPage = () => {
         imageUrl: existingImages[0] || (selectedImageFiles.length ? '' : formData.imageUrl.trim()),
         thumbnail: existingImages[0] || (selectedImageFiles.length ? '' : formData.imageUrl.trim()),
         images: existingImages,
-        openingHours: {
-          open: '06:00',
-          close: '18:00',
-          days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-          alwaysOpen: false
-        },
+        openingHours: formData.openingHoursText.trim(),
         entryFee: formData.entryFee.trim(),
         dressCode: formData.dressCode.trim(),
         peakHours: formData.peakHours.trim(),
